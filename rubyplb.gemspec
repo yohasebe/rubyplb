@@ -6,12 +6,12 @@
 Gem::Specification.new do |s|
   s.name = %q{rubyplb}
   s.version = "0.2.0"
-  s.required_ruby_version = ">= 1.8.7"
+
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Yoichiro Hasebe"]
   s.date = %q{2009-09-04}
   s.default_executable = %q{rubyplb}
-  s.description = %q{RubyPLB generates pattern lattice graphics from lists of patterns.}
+  s.description = %q{TODO: longer description of your gem}
   s.email = %q{yohasebe@gmail.com}
   s.executables = ["rubyplb"]
   s.extra_rdoc_files = [
@@ -22,20 +22,23 @@ Gem::Specification.new do |s|
     ".document",
      ".gitignore",
      "LICENSE",
-     "VERSION",
      "README.rdoc",
      "Rakefile",
-     "lib/rubyplb.rb",
+     "VERSION",
+     "bin/rubyplb",
      "lib/ruby_graphviz.rb",
+     "lib/rubyplb.rb",
+     "lib/trollop.rb",
+     "rubyplb.gemspec",
      "test/rubyplb_test.rb",
-     "test/test_helper.rb",
-     "test/test_data.plb"
+     "test/test_data.plb",
+     "test/test_helper.rb"
   ]
   s.homepage = %q{http://github.com/yohasebe/rubyplb}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.5}
-  s.summary = %q{RubyPLB generates pattern lattice graphics from lists of patterns.}
+  s.summary = %q{TODO: one-line summary of your gem}
   s.test_files = [
     "test/rubyplb_test.rb",
      "test/test_helper.rb"
