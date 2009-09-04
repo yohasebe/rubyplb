@@ -1,0 +1,105 @@
+#!/usr/bin/env ruby
+
+$:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+require 'trollop'
+require 'rubyplb'
+require 'ruby_graphviz'
+
+########## parse options ##########
+
+opts = Trollop::options do
+  version = File.read(File.dirname(__FILE__) + "/../VERSION")
+  banner <<-EOS
+  
+RubyPLB generates pattern lattice graphics from lists of patterns.
+
+Usage:
+       rubyplb [options] <source file> <output file>
+
+where:
+<source file>
+       ".plb", ".txt"
+<output file>
+       ."dot", ".png", ".jpg", or ".eps"
+[options]:
+EOS
+
+  opt :simple,  "Use simple labels for pattern nodes", :default=> false
+  opt :full, "Generate a full pattern lattice without contracting nodes", :default=> false
+  opt :vertical, "Draw the graph from top to bottom instead of left to right)", :default => false
+  opt :coloring, "Color pattern nodes", :default => false
+  opt :straight, "Straighten edges (available when output format is either png, jpg, or eps)", :default => false
+end
+
+############### main program ############### 
+
+if ARGV.size != 2
+  showerror("Input and output files are not set properly", 1) 
+end
+
+filename1 = ARGV[0]  #input  filename
+filename2 = ARGV[1]  #output filename
+
+#
+# extract input and output file types
+#
+input_type  = filename1.slice(/\.[^\.]+\z/).split(//)[1..-1].join("")
+output_type = filename2.slice(/\.[^\.]+\z/).split(//)[1..-1].join("")
+
+if (input_type !~ /\A(plb|txt)\z/ || output_type !~ /\A(dot|png|jpg|eps)\z/)
+  showerror("These file extensions are not (yet) supported.", 1)
+end
+
+#
+# input cxt data is kept as plain text
+#
+f = File.open(filename1, "r")
+inputdata = f.read
+f.close
+
+#
+# ask for confirmation of overwriting an exisiting file
+#
+if (File.exist?(filename2) && !opts[:sil])
+  print "#{filename2} exists and will be overwritten, OK? [y/n]"
+  var1 = STDIN.gets;
+  if /y/i !~ var1
+    exit;
+  end
+end
+
+begin
+  f = File.open(filename1, "r")
+  sentences = f.readlines.delete_if{ |s| /^\s*$/ =~ s }
+  f.close
+  if sentences.empty?
+    showerror("Input file does not contain data.", 1)
+  end
+rescue => e
+  showerror("Input file does not exist.", 1)  
+end
+
+begin
+  pl = PatLattice.new(opts)
+  sentences.each do |sentence|
+    pl.insert(sentence,  !opts[:full])
+  end
+# rescue => e
+#   showerror("Source data may have problems. Process aborted.", 1)
+end
+
+#
+# create the output file
+#
+case output_type
+when "dot"
+  File.open(filename2, "w") do |f|
+    f.write(pl.generate_dot)
+  end
+when "png"
+  pl.generate_img(filename2, "png", opts[:straight])
+when "jpg"
+  pl.generate_img(filename2, "jpg", opts[:straight])
+when "eps"
+  pl.generate_img(filename2, "eps", opts[:straight])
+end
