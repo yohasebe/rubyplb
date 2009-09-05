@@ -5,13 +5,13 @@ RubyPLB generates pattern lattice graphics from lists of patterns.
 == Features
 
 * Accept a text file with any number of patterns and generate a Graphviz DOT file, or a PNG/JPG/EPS image file.
-* Calculate z-scores of pattern nodes create a lattice graphic with temperature colors applied. 
+* Calculate z-scores of pattern nodes and create lattice graphs with temperature colorng applied. 
 
 == Installation
 
 Install the gem:
 
-  $sudo gem install yohasebe-rubyplb --source http://gems.github.com
+  $sudo gem install rubyplb --source http://gemcutter.org
 
 == How to Use
 
