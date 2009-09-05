@@ -8,10 +8,10 @@ Gem::Specification.new do |s|
   s.version = "0.2.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Kow Kuroda", "Yoichiro Hasebe"]
-  s.date = %q{2009-09-04}
+  s.authors = ["Yoichiro Hasebe"]
+  s.date = %q{2009-09-05}
   s.default_executable = %q{rubyplb}
-  s.description = %q{Command line Pattern Lattice building tool written in Ruby}
+  s.description = %q{TODO: longer description of your gem}
   s.email = %q{yohasebe@gmail.com}
   s.executables = ["rubyplb"]
   s.extra_rdoc_files = [
@@ -38,7 +38,7 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.5}
-  s.summary = %q{Command line Pattern Lattice building tool written in Ruby}
+  s.summary = %q{TODO: one-line summary of your gem}
   s.test_files = [
     "test/rubyplb_test.rb",
      "test/test_helper.rb"
