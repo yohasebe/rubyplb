@@ -4,9 +4,14 @@
 ## Copyright:: Copyright 2009 Kow Kuroda and Yoichiro Hasebe
 ## License::   GNU GPL version 3
 
-$KCODE = 'utf8'
+# -*- coding: utf-8 -*-
 
 require 'ruby_graphviz'
+
+## load ary_with_combination if not Ruby 1.9.x
+unless Array.instance_methods.index("combination")
+  require 'ary_with_combination'
+end
 
 def showerror(sentence, severity)
   if severity == 0
@@ -255,12 +260,12 @@ class PatLattice
         end
       end
     end
-    zscore = ((zscore * 100).round / 100.0)      
+    zscore = ((zscore * 100).round / 100.0).to_s   
     border = "0"
     pat_str = node.data.collect{|td|"<td color='black'>#{td}</td>"}.join
     pat_str = "&nbsp;" * 5 if pat_str == ""        
     label = "<<table bgcolor='#{color}' border='#{border}' cellborder='1' cellspacing='0' cellpadding='5'>" +
-            "<tr>#{pat_str}</tr>"
+            "<tr>#{pat_str}(#{zscore})</tr>"
     if !@opts[:simple]
       label += "<tr><td color='black' colspan='#{node.data.size.to_s}'> "
       if node.level != 0 and node.children_instances > 0
