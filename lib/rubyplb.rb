@@ -260,13 +260,13 @@ class PatLattice
         end
       end
     end
-    zscore = ((zscore * 100).round / 100.0).to_s   
     border = "0"
     pat_str = node.data.collect{|td|"<td color='black'>#{td}</td>"}.join
     pat_str = "&nbsp;" * 5 if pat_str == ""        
     label = "<<table bgcolor='#{color}' border='#{border}' cellborder='1' cellspacing='0' cellpadding='5'>" +
-            "<tr>#{pat_str}(#{zscore})</tr>"
+            "<tr>#{pat_str}</tr>"
     if !@opts[:simple]
+      zscore = ((zscore * 100).round / 100.0).to_s   
       label += "<tr><td color='black' colspan='#{node.data.size.to_s}'> "
       if node.level != 0 and node.children_instances > 0
         label += node.children_instances.to_s + " (" + zscore.to_s + ")"
