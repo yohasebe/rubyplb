@@ -223,7 +223,7 @@ class PatLattice
   end
   
   def create_nodelabel(node)
-    if (@opts[:coloring] || !@opts[:simple])
+    if (@opts[:coloring] != 0 || !@opts[:simple])
       if node.level != 0 and node.children_instances > 0
         ldata = @level_data[node.level]
         dev = node.children_instances - ldata[:avg_num_children]
@@ -234,30 +234,31 @@ class PatLattice
       end
     end
 
-    color = "#ffffff"
-    if @opts[:coloring]
-      if !zscore.nan? and zscore != 0.0
-        if zscore >= 3.0
-          color = "2"
-        elsif zscore >= 2.0
-          color = "3"
-        elsif zscore >= 1.5
-          color = "4"
-        elsif zscore >= 1.0
-          color = "5"
-        elsif zscore > 0.5
-          color = "6"
-        elsif zscore >= 0.0
-          color = "7"
-        elsif zscore >= -0.5
-          color = "8"
-        elsif zscore >= -1.0
-          color = "9"
-        elsif zscore >= -1.5
-          color = "10"
-        else
-          color = "11"
-        end
+    if @opts[:coloring] == 0
+        color = "#ffffff"
+    else
+      if zscore.nan? or zscore == 0.0
+        color = "#ffffff"
+      elsif zscore >= 3.0
+        color = @opts[:coloring] == 1 ? "2" : "6"
+      elsif zscore >= 1.5
+        color = @opts[:coloring] == 1 ? "3" : "5"
+      elsif zscore >= 1.0
+        color = @opts[:coloring] == 1 ? "4" : "4"
+      elsif zscore >= 0.5
+        color = @opts[:coloring] == 1 ? "5" : "3"
+      elsif zscore > 0.0
+        color = @opts[:coloring] == 1 ? "6" : "2"
+      elsif zscore >= -0.5
+        color = @opts[:coloring] == 1 ? "7" : "1"
+      elsif zscore >= -1.0
+        color = @opts[:coloring] == 1 ? "8" : "1"
+      elsif zscore >= -1.5
+        color = @opts[:coloring] == 1 ? "9" : "1"
+      elsif zscore >= -3.5
+        color = @opts[:coloring] == 1 ? "10" : "1"
+      else
+        color = @opts[:coloring] == 1 ? "11" : "1"
       end
     end
     border = "0"
@@ -278,16 +279,27 @@ class PatLattice
   end
   
   def create_node(graph, node_id, node_label)
+    case @opts[:coloring] 
+    when 1
+      colorscheme = "rdylbu11"
+    when 2
+      colorscheme = "greys9"
+    else
+      colorscheme = ""
+    end
+    
     graph.node(node_id, :label => node_label, :shape => "plaintext", 
                         :height => "0.0", :width => "0.0",
-                        :margin => "0.0", :colorscheme => "rdylbu11", :URL => node_id)
+                        :margin => "0.0", :colorscheme => colorscheme, :URL => node_id)
   end
   
   def generate_dot
-   setup_data if (@opts[:coloring] || !@opts[:simple])
+   setup_data if (@opts[:coloring] != 0 || !@opts[:simple])
    nodes_drawn = []
    rankdir = @opts[:vertical] ? "" : "LR" 
-   plb = RubyGraphviz.new("plb", :rankdir => rankdir, :nodesep => "0.8", :ranksep => "0.8")
+   nodesep = @opts[:nodesep] ? @opts[:nodesep].to_s : "0.8"
+   ranksep = @opts[:ranksep] ? @opts[:ranksep].to_s : "0.8"
+   plb = RubyGraphviz.new("plb", :rankdir => rankdir, :nodesep => nodesep, :ranksep => ranksep)
    levels.each do |level|
      level.each do |node|
        node_id = node.object_id     
@@ -303,7 +315,7 @@ class PatLattice
            create_node(plb, cnode_id, cnode_label) 
            nodes_drawn << node_id
          end
-         if @opts[:coloring]
+         if @opts[:coloring] != 0
            colors = []
            @coloring.each do |color, val|
              if val.index(node.data) and val.index(cnode.data)
@@ -311,7 +323,7 @@ class PatLattice
              end
            end
          else
-           colors = ["black"]
+           colors = ["gray60"]
          end
          plb.edge(node_id, cnode_id, :color => colors.join(":"))
        end

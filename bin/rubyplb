@@ -28,10 +28,14 @@ EOS
   opt :simple,  "Use simple labels for pattern nodes", :default=> false
   opt :full, "Generate a full pattern lattice without contracting nodes", :default=> false
   opt :vertical, "Draw the graph from top to bottom instead of left to right)", :default => false
-  opt :coloring, "Color pattern nodes", :default => false
+  opt :coloring, "Color pattern nodes [0 = none (default), 1 = cool/warm, 2 = monochrome]", :default => 0
   opt :straight, "Straighten edges (available when output format is either png, jpg, or eps)", :default => false
+  opt :nodesep, "Size of separation between sister nodes (from 0.1 to 5.0)", :default => 0.8
+  opt :ranksep, "Size of separation between ranks (from 0.1 to 5.0)", :default => 0.8
 end
-
+Trollop::die :coloring, "must be 0, 1, or 2" if (opts[:coloring] > 2 || opts[:coloring] < 0)
+Trollop::die :ranksep,  "must be within 0.1 - 5.0" if (opts[:ranksep] < 0.1 || opts[:ranksep] > 5.0)
+Trollop::die :nodesep,  "must be within 0.1 - 5.0" if (opts[:nodesep] < 0.1 || opts[:nodesep] > 5.0)
 ############### main program ############### 
 
 if ARGV.size != 2
