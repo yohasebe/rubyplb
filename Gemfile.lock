@@ -1,0 +1,14 @@
+PATH
+  remote: .
+  specs:
+    rubyplb (0.2.9)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  rubyplb!

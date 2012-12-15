@@ -9,9 +9,9 @@
 require 'ruby_graphviz'
 
 ## load ary_with_combination if not Ruby 1.9.x
-# unless Array.instance_methods.index(:combination)
-#   require 'ary_with_combination'
-# end
+unless Array.instance_methods.index(:combination)
+  require 'ary_with_combination'
+end
 
 def showerror(sentence, severity)
   if severity == 0
