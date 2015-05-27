@@ -11,25 +11,25 @@ RubyPLB generates pattern lattice graphics from lists of patterns.
 
 Install the gem:
 
-  $sudo gem install rubyplb --source http://gemcutter.org
+  $sudo gem install rubyplb
 
 ## How to Use
 
-  Usage:
-         rubyplb [options] <source file> <output file>
+    Usage:
+           rubyplb [options] <source file> <output file>
   
-  where:
-  <source file>
-         ".plb", ".txt"
-  <output file>
-         ."dot", ".png", ".jpg", or ".eps"
-  [options]:
-      --simple, -s:   Use simple labels for pattern nodes
-        --full, -f:   Generate a full pattern lattice without contracting nodes
-    --vertical, -v:   Draw the graph from top to bottom instead of left to right)
-    --coloring, -c:   Color pattern nodes
-    --straight, -t:   Straighten edges (available when output format is either png, jpg, or eps)
-        --help, -h:   Show this message
+    where:
+    <source file>
+           ".plb", ".txt"
+    <output file>
+           ."dot", ".png", ".jpg", or ".eps"
+    [options]:
+        --simple, -s:   Use simple labels for pattern nodes
+          --full, -f:   Generate a full pattern lattice without contracting nodes
+      --vertical, -v:   Draw the graph from top to bottom instead of left to right)
+      --coloring, -c:   Color pattern nodes
+      --straight, -t:   Straighten edges (available when output format is either png, jpg, or eps)
+          --help, -h:   Show this message
 
 ## ToDo
 

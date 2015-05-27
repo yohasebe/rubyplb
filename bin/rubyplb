@@ -76,13 +76,13 @@ end
 
 begin
   f = File.open(filename1, "r")
-  sentences = f.readlines.delete_if{ |s| /^\s*$/ =~ s }
-  f.close
-  if sentences.empty?
-    showerror("Input file does not contain data.", 1)
-  end
 rescue => e
   showerror("Input file does not exist.", 1)  
+end
+sentences = f.readlines.delete_if{ |s| /^\s*$/ =~ s }
+f.close
+if sentences.empty?
+  showerror("Input file does not contain data.", 1)
 end
 
 begin
