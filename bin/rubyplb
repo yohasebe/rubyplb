@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 # -*- coding: utf-8 -*-
+Encoding.default_external = "UTF-8"
 
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib/rubyplb')
@@ -82,7 +83,7 @@ if (File.exist?(filename2) && !opts[:sil])
 end
 
 begin
-  f = File.open(filename1, "r")
+  f = File.open(filename1, "r:UTF-8:UTF-8")
 rescue => e
   showerror("Input file does not exist.", 1)  
 end
@@ -96,7 +97,7 @@ begin
   pl = PatLattice.new(opts)
   sentences.each do |sentence|
     pl.insert(sentence,  !opts[:full])
-  end
+end
 # rescue => e
 #   showerror("Source data may have problems. Process aborted.", 1)
 end

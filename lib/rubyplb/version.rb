@@ -1,3 +1,3 @@
 module Rubyplb
-  VERSION = "0.2.93"
+  VERSION = "0.2.94"
 end
