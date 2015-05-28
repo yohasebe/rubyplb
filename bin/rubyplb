@@ -11,7 +11,7 @@ require 'ruby_graphviz'
 ########## parse options ##########
 
 opts = Trollop::options do
-  version = File.read(File.dirname(__FILE__) + "/../VERSION")
+  version File.read(File.dirname(__FILE__) + "/../VERSION").chomp
   banner <<-EOS
   
 RubyPLB generates pattern lattice graphics from lists of patterns.
@@ -34,7 +34,7 @@ EOS
   opt :straight, "Straighten edges (available when output format is either png, jpg, or eps)", :default => false
   opt :nodesep, "Size of separation between sister nodes (from 0.1 to 5.0)", :default => 0.8
   opt :ranksep, "Size of separation between ranks (from 0.1 to 5.0)", :default => 0.8
-  opt :version, "Version of RubyPLB"
+  opt :direction, "Direction of elements (LR or RL)", :default => "LR"
 end
 
 Trollop::die :coloring, "must be 0, 1, or 2" if (opts[:coloring] > 2 || opts[:coloring] < 0)
@@ -44,10 +44,6 @@ Trollop::die :nodesep,  "must be within 0.1 - 5.0" if (opts[:nodesep] < 0.1 || o
 ############### main program ############### 
 
 if ARGV.size != 2
-  if opts[:version]
-    puts version
-    exit
-  end
   showerror("Input and output files are not set properly", 1) 
 end
 
@@ -63,13 +59,6 @@ output_type = filename2.slice(/\.[^\.]+\z/).split(//)[1..-1].join("")
 if (input_type !~ /\A(plb|txt)\z/ || output_type !~ /\A(dot|png|jpg|eps)\z/)
   showerror("These file extensions are not (yet) supported.", 1)
 end
-
-#
-# input cxt data is kept as plain text
-#
-f = File.open(filename1, "r")
-inputdata = f.read
-f.close
 
 #
 # ask for confirmation of overwriting an exisiting file

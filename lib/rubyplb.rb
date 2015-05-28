@@ -77,7 +77,6 @@ class PatLattice
   
   def create_patterns(sentence, compact)
     words = sentence.split(/\s+/)
-
     if /\((\d+)\)/ =~ words[-1]
       words.pop 
       times = $1.to_i
@@ -95,6 +94,8 @@ class PatLattice
         raise "Data contains an invalid string."
       end
     end
+    
+    words.reverse! if /\ARL\z/i =~ @opts[:direction]
     
     idx = (0...words.size).to_a
     words_with_idx = words.zip(idx).collect{|a| a.join("-")}
@@ -134,8 +135,7 @@ class PatLattice
   end
   
   def insert(sentence, compact)
-    ptns = create_patterns(sentence, compact)
-    
+    ptns = create_patterns(sentence, compact)    
     new_nodes = []    
     ptns.each do |ptn|
       if existing = search(ptn)
