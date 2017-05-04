@@ -31,15 +31,22 @@ Install the gem:
       --straight, -t:   Straighten edges (available when output format is either png, jpg, or eps)
           --help, -h:   Show this message
 
-## ToDo
+## Example
 
-* Multiple input formats
-* Database connection capability
+Source file (`sample.plb`)
 
-## Links
+    A B C A [navy] (42)
+    C D E [#FF9900] (23)
+    A D E (8)
 
-under construction
+Each line represents a pattern, or an instance of a pattern to be more precise. A color code can be specified in square brackets and pattern weight can be specified by an integer in parentheses after the pattern representation.
+
+    rubyplb -s -c 1 -t sample.plb sapmple.png
+
+Resulting image
+
+![sample.png](https://github.com/yohasebe/rubyplb/blob/master/sample.png)
 
 ## Copyright
 
-Copyright (c) 2009-2012 Kow Kuroda and Yoichiro Hasebe. See LICENSE for details.
+Copyright (c) 2009-2017 Kow Kuroda and Yoichiro Hasebe. See LICENSE for details.
