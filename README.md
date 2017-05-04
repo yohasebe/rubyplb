@@ -11,7 +11,7 @@ RubyPLB generates pattern lattice graphics from lists of patterns.
 
 Install the gem:
 
-  $sudo gem install rubyplb
+    $gem install rubyplb
 
 ## How to Use
 

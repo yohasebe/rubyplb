@@ -1,0 +1,14 @@
+pkg/
+tmp/
+doc/
+.DS_Store
+Gemfile.lock
+
+*.bak
+*.~
+*.log
+log/
+logs/
+
+bin/rsync_code
+bin/linktree.rb
