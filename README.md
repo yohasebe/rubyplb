@@ -41,7 +41,7 @@ Source file (`sample.plb`)
 
 Each line represents a pattern, or an instance of a pattern to be more precise. A color code can be specified in square brackets and pattern weight can be specified by an integer in parentheses after the pattern representation.
 
-    rubyplb -s -c 1 -t sample.plb sapmple.png
+    rubyplb -s -c 1 -t -v sample.plb sapmple.png
 
 Resulting image
 
